@@ -11,7 +11,7 @@ const db = require('./models');
 
 const app = express();
 
-// this line makes the session use sequelize to write session to postgres table
+// this line makes the session use sequelize to write session to postgres table (remember to sync)
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sessionStore = new SequelizeStore({
@@ -35,6 +35,9 @@ app.use(session({
   store: sessionStore,
 }));
 
+// Create the store (there may be a better way to do this)
+sessionStore.sync();
+
 // Starts the flash middleware
 app.use(flash());
 
@@ -57,6 +60,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
 });
 
 app.use('/auth', require('./controllers/auth'));
+// To lock future/potential controllers
 // app.use('/locked', isLoggedIn, require('./controllers/lockedController'))
 
 var server = app.listen(process.env.PORT || 3000);
