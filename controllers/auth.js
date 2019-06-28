@@ -1,8 +1,8 @@
-const db = require('../models')
+const db = require('../models');
 const express = require('express');
 const router = express.Router();
-const passport = require('../config/passportConfig')
-const flash = require('connect-flash')
+const passport = require('../config/passportConfig');
+const flash = require('connect-flash');
 
 router.get('/signup', function(req, res) {
   res.render('auth/signup');
@@ -40,7 +40,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   successFlash: 'You are now logged in! 🎉',
   failureRedirect: '/auth/login',
   failureFlash: 'Invalid login details 🔪'
